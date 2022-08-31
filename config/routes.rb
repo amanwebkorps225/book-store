@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :bought
   get "profile", to: "profile#data"
   
-  post "home" , to: "home#buybook"
+  post "buybook" , to: "home#buybook"
 
   # if wrong route given 
   get '*path', :to => 'application#routing_error'

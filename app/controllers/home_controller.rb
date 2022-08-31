@@ -10,32 +10,36 @@ class HomeController < ApplicationController
   end
  # -------------------------------------
 
-   def buybook
+   def buybook        #  to buy book
         if current_user.role == "client"
           @boughtbook = Bought.new(bought_params)
           @boughtbook.user_id=current_user.id
-    
-                if @boughtbook.save
-                  # render json: @boughtbook, status: :created, location: @boughtbook
-                  UserMailer.buybook(current_user).deliver_later   # mail buy book                               
-                  render json: @boughtbook, status: :created, location: @boughtbook
+             
+          if @boughtbook.quantity < Book.find(@boughtbook.book_id).quantity
+            book_save(@boughtbook)  # save book data   
+                          
 
-                else
-                  render json: @boughtbook.errors, status: :unprocessable_entity
-                end
+          else
+            render json: { message: "currently this quantity is not in stock"}#, status: :unprocessable_entity
+
+          end
+           
+               
         else
             render json: { message: "Login first to access this page."}, status: :unprocessable_entity
         end
 
    end
    
- #------------------------------------------  
+ #------------------------------------------ --------------------------- 
 
 
   private
 
   def bought_params
-      params.require(:bought).permit(:buybook, :book_id)
+      params.require(:bought).permit(:buybook, :book_id , :quantity)
+      
+
   end
   # Creating user information in json
   
@@ -69,4 +73,19 @@ class HomeController < ApplicationController
       end
     end
     #---------------------------------------
+           
+    def book_save(boughtbook)
+        if boughtbook.save
+                  # render json: @boughtbook, status: :created, location: @boughtbook
+                  # UserMailer.buybook(current_user).deliver_later   # mail buy book    
+                  @book = Book.find(boughtbook.book_id)
+                  @book.quantity =   (Book.find(@boughtbook.book_id).quantity) - (boughtbook.quantity)  
+                  @book.save                      
+                  render json: boughtbook, status: :created, location: boughtbook
+
+                else
+                  render json: boughtbook.errors, status: :unprocessable_entity
+                end
+    end
+    #--------------
 end

@@ -32,6 +32,7 @@ load_and_authorize_resource
 
       @book = Book.new(book_params)
       @book.user_id=current_user.id
+      
 
           if @book.save
             render json: @book, status: :created, location: @book
@@ -67,7 +68,7 @@ load_and_authorize_resource
     # Only allow a list of trusted parameters through.
     def book_params
       # params.fetch(:notice, {})
-      params.require(:book).permit(:name, :author, :price)
+      params.require(:book).permit(:name, :author, :price ,:quantity)
 
     end
 end
