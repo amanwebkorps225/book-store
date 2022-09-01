@@ -100,7 +100,7 @@ class ApplicationController < ActionController::API
     @a.each do |book|
       data << {
         book_id: book.id, book_name: book.name, book_author: book.author,
-        book_price: book.price
+        book_price: book.price,available_quantity: book.quantity
       }
     end
     data

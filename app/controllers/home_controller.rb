@@ -15,16 +15,12 @@ class HomeController < ApplicationController
           @boughtbook = Bought.new(bought_params)
           @boughtbook.user_id=current_user.id
              
-          if @boughtbook.quantity < Book.find(@boughtbook.book_id).quantity
-            book_save(@boughtbook)  # save book data   
-                          
+            if @boughtbook.quantity <= Book.find(@boughtbook.book_id).quantity
+              book_save(@boughtbook)  # save book data 
+            else
+              render json: { message: "currently this quantity is not in stock"}#, status: :unprocessable_entity
 
-          else
-            render json: { message: "currently this quantity is not in stock"}#, status: :unprocessable_entity
-
-          end
-           
-               
+            end       
         else
             render json: { message: "Login first to access this page."}, status: :unprocessable_entity
         end
