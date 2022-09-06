@@ -14,9 +14,4 @@ load_and_authorize_resource
     end
   end
 
-  
-  # GET /boughts/1
-#   def show
-#     render json: @book
-#   end
 end

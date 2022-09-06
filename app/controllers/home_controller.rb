@@ -94,7 +94,7 @@ class HomeController < ApplicationController
     price = Stripe::Price.create({
       unit_amount: (amt),
       currency: "inr",
-      product: "prod_MM0G56CDdOlPV3",
+      product: "prod_MM0G56CDdOlPV3",     #Hellen keller book ==  prod_MMIBplDzaG2zmE
     })
 
     order = Stripe::PaymentLink.create(
