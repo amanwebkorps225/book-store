@@ -79,6 +79,7 @@ class HomeController < ApplicationController
       @book.quantity = (Book.find(@boughtbook.book_id).quantity) - (boughtbook.quantity)
       @price = (@book.price)*100
       @quantity = boughtbook.quantity
+      
       book_payment(@price ,@quantity)    #paymentmethod
 
       @book.save

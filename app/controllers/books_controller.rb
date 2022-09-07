@@ -27,9 +27,9 @@ load_and_authorize_resource
   # POST /books
   def create
 
-    if current_user
+    if current_user.role == "admin"
      
-
+         
       @book = Book.new(book_params)
       @book.user_id=current_user.id
       

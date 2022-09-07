@@ -70,7 +70,8 @@ class ApplicationController < ActionController::API
         Bookid: book.id,
         BookName: book.name,
         Author: book.author,
-        Price: book.price
+        Price: book.price,
+        Quantity: book.quantity
         # url: notice_url(notice),
         # created_at: notice.created_at,
         # updated_at: notice.updated_at
